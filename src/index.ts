@@ -31,11 +31,15 @@ program
         process.exit(1);
       }
 
+      const handlerContents = fs.readFileSync(fullPath, "utf-8");
+
       // Generate server.js content
       const serverContent = `#!/usr/bin/env node
 
 const express = require("express");
-const handler = require("${fullPath.replace(/\\/g, "\\\\")}");
+
+${handlerContents}
+
 const app = express();
 
 app.use(express.json());
@@ -44,28 +48,31 @@ app.all("*", (req, res) => handler(req, res));
 const port = ${options.port};
 app.listen(port, () => console.log("Server running at http://localhost:" + port));
 `;
-
-      // Write server.js
-      fs.mkdirSync(path.dirname(options.server), { recursive: true });
-      fs.writeFileSync(options.server, serverContent);
-      fs.chmodSync(options.server, 0o755); // make executable
-      console.log("Generated server.js at", options.server);
-
       // Generate K8s manifests
       const config = {
         name: path.basename(file, ".js"),
         namespace: "default",
-        image: "dockerhubuser/myapp:latest",
+        image: "jpyles0524/serverless:latest",
         port: parseInt(options.port, 10),
         replicas: 1,
-        domain: "test.com",
+        domain: "jaydenpyles.dev",
+        env: {
+          USER_FUNC_CODE: {
+            valueFrom: {
+              configMapKeyRef: {
+                name: "myfunc",
+                key: "index.js",
+              },
+            },
+          },
+        },
       };
 
       const resources = [
         createDeployment(config),
         createService(config),
         createIngress(config),
-        createConfigMap(fullPath, config.name, config.namespace),
+        createConfigMap(serverContent, config.name, config.namespace),
       ];
 
       const yamlOutput = resources.map((r) => YAML.stringify(r)).join("---\n");

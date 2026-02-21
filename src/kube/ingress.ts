@@ -3,31 +3,34 @@ import type { AppConfig } from "@/types";
 export function createIngress(config: AppConfig) {
   return {
     apiVersion: "traefik.io/v1alpha1",
-    kind: "Ingress",
+    kind: "IngressRoute",
     metadata: {
       name: config.name,
       namespace: config.namespace,
     },
     spec: {
-      rules: [
+      entryPoints: ["web"],
+      routes: [
         {
-          host: config.domain,
-          http: {
-            paths: [
-              {
-                path: "/",
-                pathType: "Prefix",
-                backend: {
-                  service: {
-                    name: config.name,
-                    port: { number: 80 },
-                  },
-                },
-              },
-            ],
-          },
+          match: `Host(${config.name}.${config.domain})`,
+          kind: "Rule",
+          services: [{ name: config.name, port: 80 }],
         },
       ],
     },
   };
 }
+
+// apiVersion: traefik.io/v1alpha1
+// kind: IngressRoute
+// metadata:
+//   name: pyload
+// spec:
+//   entryPoints:
+//     - web
+//   routes:
+//     - match: Host(`download.jaydenpyles.dev`)
+//       kind: Rule
+//       services:
+//         - name: pyload
+//           port: 8000

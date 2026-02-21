@@ -5,5 +5,5 @@ export interface AppConfig {
   port: number;
   domain: string;
   replicas?: number;
-  env?: Record<string, string>;
+  env?: Record<string, any>;
 }
