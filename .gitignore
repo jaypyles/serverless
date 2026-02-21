@@ -7,7 +7,6 @@ build/
 
 # Optional npm cache
 .npm
-package-lock.json
 
 # Logs
 logs/
