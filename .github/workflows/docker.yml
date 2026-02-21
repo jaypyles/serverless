@@ -17,7 +17,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build Docker image
-        run: docker build -t jpyles0524/serverless:latest Dockerhub.serverless
+        run: docker build -t jpyles0524/serverless:latest -f Dockerfile.serverless .
 
       - name: Push Docker image
         run: docker push jpyles0524/serverless:latest
