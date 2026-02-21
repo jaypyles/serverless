@@ -1,14 +1,12 @@
 {
   "name": "@jpyles0524/serverless",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "bin": {
-    "jpyles0524-serverless": "dist/index.js"
-  },
   "scripts": {
     "build": "tsc -p tsconfig.json && tsc-alias -p tsconfig.json",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy": "node dist/index.js"
   },
   "exports": {
     ".": {
