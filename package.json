@@ -1,6 +1,6 @@
 {
   "name": "@jpyles0524/serverless",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -13,6 +13,9 @@
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     }
+  },
+  "bin": {
+    "serverless": "dist/index.js"
   },
   "files": [
     "dist",
