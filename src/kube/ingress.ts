@@ -12,7 +12,7 @@ export function createIngress(config: AppConfig) {
       entryPoints: ["web"],
       routes: [
         {
-          match: `Host(${config.name}.${config.domain})`,
+          match: `Host(\`${config.name}.${config.domain}\`)`,
           kind: "Rule",
           services: [{ name: config.name, port: 80 }],
         },
@@ -20,17 +20,3 @@ export function createIngress(config: AppConfig) {
     },
   };
 }
-
-// apiVersion: traefik.io/v1alpha1
-// kind: IngressRoute
-// metadata:
-//   name: pyload
-// spec:
-//   entryPoints:
-//     - web
-//   routes:
-//     - match: Host(`download.jaydenpyles.dev`)
-//       kind: Rule
-//       services:
-//         - name: pyload
-//           port: 8000

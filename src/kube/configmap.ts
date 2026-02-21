@@ -7,7 +7,7 @@ export function createConfigMap(
     apiVersion: "v1",
     kind: "ConfigMap",
     metadata: {
-      name,
+      name: "myfunc",
       namespace,
     },
     data: {
