@@ -8,6 +8,23 @@ import fs from "fs";
 import path from "path";
 import YAML from "yaml";
 
+export const spawnKubectlCommand = (args: string[]) => {
+  const kubectl = spawn("kubectl", args, {
+    stdio: ["pipe", "pipe", "pipe"],
+  });
+
+  kubectl.stdout.on("data", (data: string) => {
+    process.stdout.write(data);
+  });
+
+  // Capture stderr
+  kubectl.stderr.on("data", (data: string) => {
+    process.stderr.write(data);
+  });
+
+  return kubectl;
+};
+
 export const createServerlessFunction = (
   config: AppConfig,
   options: Record<string, any>,
