@@ -15,6 +15,6 @@ export function createConfigMap(
       name,
       namespace,
     },
-    data: { functions, server },
+    data: { functions: JSON.stringify(functions, null, 2), server },
   };
 }
