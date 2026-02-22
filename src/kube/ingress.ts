@@ -5,16 +5,16 @@ export function createIngress(config: AppConfig) {
     apiVersion: "traefik.io/v1alpha1",
     kind: "IngressRoute",
     metadata: {
-      name: config.name,
+      name: "serverless",
       namespace: config.namespace,
     },
     spec: {
       entryPoints: ["web"],
       routes: [
         {
-          match: `Host(\`${config.name}.${config.domain}\`)`,
+          match: `Host(\`serverless.${config.domain}\`)`,
           kind: "Rule",
-          services: [{ name: config.name, port: 80 }],
+          services: [{ name: "serverless", port: 80 }],
         },
       ],
     },

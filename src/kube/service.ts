@@ -5,10 +5,10 @@ export function createService(config: AppConfig) {
     apiVersion: "v1",
     kind: "Service",
     metadata: {
-      name: config.name,
+      name: "serverless",
     },
     spec: {
-      selector: { app: config.name },
+      selector: { app: "serverless" },
       ports: [
         {
           port: 80,

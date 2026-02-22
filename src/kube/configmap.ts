@@ -12,7 +12,7 @@ export function createConfigMap(
     apiVersion: "v1",
     kind: "ConfigMap",
     metadata: {
-      name,
+      name: "serverless",
       namespace,
     },
     data: { functions: JSON.stringify(functions, null, 2), server },

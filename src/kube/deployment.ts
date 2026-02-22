@@ -20,21 +20,21 @@ export function createDeployment(config: AppConfig) {
     apiVersion: "apps/v1",
     kind: "Deployment",
     metadata: {
-      name: config.name,
+      name: "serverless",
     },
     spec: {
       replicas: config.replicas ?? 1,
       selector: {
-        matchLabels: { app: config.name },
+        matchLabels: { app: "serverless" },
       },
       template: {
         metadata: {
-          labels: { app: config.name },
+          labels: { app: "serverless" },
         },
         spec: {
           containers: [
             {
-              name: config.name,
+              name: "serverless",
               image: config.image,
               imagePullPolicy: "Always",
               ports: [{ containerPort: config.port }],

@@ -11,7 +11,7 @@ export const getConfig = (file: string, options: Record<string, any>) => {
   envObj.USER_FUNC_CODE = {
     valueFrom: {
       configMapKeyRef: {
-        name: path.basename(file, ".js"),
+        name: "serverless",
         key: "functions",
       },
     },
@@ -20,7 +20,7 @@ export const getConfig = (file: string, options: Record<string, any>) => {
   envObj.SERVER_CODE = {
     valueFrom: {
       configMapKeyRef: {
-        name: path.basename(file, ".js"),
+        name: "serverless",
         key: "server",
       },
     },
