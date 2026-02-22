@@ -43,3 +43,4 @@ temp/
 
 # Optional output from ts-node-dev
 ts-node-dev/
+funcs/
