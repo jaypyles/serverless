@@ -2,7 +2,7 @@
 
 Deploy a plain JavaScript function to Kubernetes in seconds.
 
-This CLI takes a JS file that exports a `handler(req, res)` function, wraps it in a tiny Express server, generates Kubernetes manifests (Deployment, Service, Traefik IngressRoute, ConfigMap), and applies them via `kubectl`. Your function is then accessible at `https://<function-name>.<domain>`.
+This CLI takes a JS file that exports a `handler(req, res)` function, wraps it in a tiny Express server, generates Kubernetes manifests (Deployment, Service, Traefik IngressRoute, ConfigMap), and applies them via `kubectl`. Your function is then accessible at `https://serverless.<domain>/<function_name>`.
 
 ## Requirements
 
@@ -37,7 +37,7 @@ serverless deploy funcs/helloworld.js \
   -e FOO=bar -e MODE=prod
 ```
 
-On success, your function will be reachable at `https://helloworld.yourdomain.com`.
+On success, your function will be reachable at `https://serverless.yourdomain.com/helloworld`.
 
 3. Delete it later:
 
@@ -49,10 +49,10 @@ serverless delete helloworld
 
 - Deployment: runs `jpyles0524/serverless:latest` with your code
 - Service: exposes the pod on port 80 within the cluster
-- IngressRoute (Traefik): routes `Host(`<function>.<domain>`)` to the service
+- IngressRoute (Traefik): routes `Host(`serverless.<domain>`)` to the service
 - ConfigMap: stores the generated `index.js` that includes your handler
 
-At runtime, the container reads your code from `USER_FUNC_CODE`, writes it to `index.js`, and starts a minimal Express server that forwards all methods on `/` to your `handler(req, res)`.
+At runtime, the container reads your code from `USER_FUNC_CODE`, writes it to `file.js`, and starts a minimal Express server that forwards all methods on `/<function_name>` to your `handler(req, res)`.
 
 ## Key Options
 
