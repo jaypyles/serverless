@@ -12,7 +12,16 @@ export const getConfig = (file: string, options: Record<string, any>) => {
     valueFrom: {
       configMapKeyRef: {
         name: path.basename(file, ".js"),
-        key: "index.js",
+        key: "functions",
+      },
+    },
+  };
+
+  envObj.SERVER_CODE = {
+    valueFrom: {
+      configMapKeyRef: {
+        name: path.basename(file, ".js"),
+        key: "server",
       },
     },
   };

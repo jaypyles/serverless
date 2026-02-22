@@ -1,3 +1,4 @@
+import os from "os";
 import { AppConfig } from "@/types";
 import { createDeployment } from "./deployment";
 import { createService } from "./service";
@@ -28,18 +29,20 @@ export const spawnKubectlCommand = (args: string[]) => {
 export const createServerlessFunction = (
   config: AppConfig,
   options: Record<string, any>,
-  serverContent: string,
 ) => {
   const resources = [
     createDeployment(config),
     createService(config),
     createIngress(config),
-    createConfigMap(serverContent, config.name, config.namespace),
+    createConfigMap(config.name, config.namespace),
   ];
+  const configDir = path.join(os.homedir(), ".config", "serverless");
+  const outputPath = path.join(configDir, "output.yaml");
 
   const yamlOutput = resources.map((r) => YAML.stringify(r)).join("---\n");
-  fs.mkdirSync(path.dirname(options.output), { recursive: true });
-  fs.writeFileSync(options.output, yamlOutput);
+
+  fs.mkdirSync(configDir, { recursive: true });
+  fs.writeFileSync(outputPath, yamlOutput);
 
   const kubectl = spawn("kubectl", ["apply", "-f", "-"], {
     stdio: ["pipe", "pipe", "pipe"], // explicitly pipe stdin, stdout, stderr

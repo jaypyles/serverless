@@ -10,7 +10,7 @@ export const createDeployCommand = (program: Command) => {
     .description("Deploy a JS file as a serverless function")
     .argument("<file>", "JS file exporting (req, res) => {}")
     .option("-p, --port <port>", "Port", "3000")
-    .option("-o, --output <output>", "Output YAML file", "dist/output.yaml")
+    .option("-o, --outputj<output>", "Output YAML file", "dist/output.yaml")
     .option("-s, --server <server>", "Output server file", "dist/server.js")
     .option("-n, --namespace <namespace>", "Kubernetes namespace", "default")
     .option("-d, --domain <domain>", "Domain for ingress", "jaydenpyles.dev")
@@ -21,8 +21,8 @@ export const createDeployCommand = (program: Command) => {
       [],
     )
     .action((file, options) => {
-      const serverContent = getFileContents(file, options);
+      getFileContents(file, options);
       const config = getConfig(file, options);
-      createServerlessFunction(config, options, serverContent);
+      createServerlessFunction(config, options);
     });
 };

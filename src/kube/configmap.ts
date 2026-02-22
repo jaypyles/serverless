@@ -1,8 +1,13 @@
+import { getExpressServerContent } from "@/server/server";
+import { readRegistry } from "./registry";
+
 export function createConfigMap(
-  serverContent: string,
   name: string = "serverless-func",
   namespace: string = "default",
 ) {
+  const { data: functions } = readRegistry();
+  const server = getExpressServerContent(functions, 3000);
+
   return {
     apiVersion: "v1",
     kind: "ConfigMap",
@@ -10,8 +15,6 @@ export function createConfigMap(
       name,
       namespace,
     },
-    data: {
-      "index.js": serverContent,
-    },
+    data: { functions, server },
   };
 }
