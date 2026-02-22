@@ -6,7 +6,7 @@ echo "$SERVER_CODE" >server.js
 mkdir -p functions
 
 echo "$USER_FUNC_CODE" | jq -r 'to_entries[] | @base64' | while read -r entry; do
-  _jq() { echo "$entry" | base64 --decode | jq -r "$1"; }
+  _jq() { echo "$entry" | base64 -d | jq -r "$1"; }
 
   filename=$(_jq '.key')
   content=$(_jq '.value')
