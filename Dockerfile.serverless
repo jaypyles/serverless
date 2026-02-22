@@ -1,14 +1,11 @@
-FROM node:20
+FROM node:20-alpine
 
-RUN apt-get update \
-  && apt-get install -y --no-install-recommends jq=1.6-2+deb11u1 \
-  && rm -rf /var/lib/apt/lists/*
+RUN apk add --no-cache jq
 
 WORKDIR /app
 
 COPY package.json package-lock.json ./
 RUN npm ci --production
-
 
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
