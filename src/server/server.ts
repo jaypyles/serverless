@@ -5,7 +5,7 @@ export const getExpressServerContent = (
   const routes = Object.keys(handlerFiles)
     .map((filename) => {
       const routeName = "/" + filename.replace(/\.js$/, "");
-      const importPath = `./functions/${filename}`;
+      const importPath = `./functions/${filename}.js`;
       return `
 
 app.all("${routeName}", async (req, res, next) => {
